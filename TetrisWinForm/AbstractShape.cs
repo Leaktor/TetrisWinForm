@@ -9,7 +9,7 @@ namespace TetrisWinForm
 {
   interface AbstractShape
     {        
-          int[,] shape  { get; set; }  
+          int[,] shape { get; set; }  
         
 
     }

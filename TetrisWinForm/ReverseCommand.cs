@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TetrisWinForm
 {
-    class ReverseCommand:ICommand
+    class ReverseCommand
     {
-       public (int[,]shape,int left,int right) command(AbstractShape ab)
+       public int[,] command(AbstractShape ab)
         {
             int[,] reverse = new int[4, 4];
 
@@ -25,7 +25,7 @@ namespace TetrisWinForm
                 
             }
 
-            return (reverse,0,0);
+            return reverse;
         }
     }
 }

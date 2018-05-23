@@ -73,11 +73,11 @@
     <Compile Include="Shapes\SShape.cs" />
     <Compile Include="TetrisShape.cs" />
     <Compile Include="Field.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="TetrisForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="TetrisForm.Designer.cs">
+      <DependentUpon>TetrisForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ICommand.cs" />
     <Compile Include="Shapes\IShape.cs" />
@@ -86,8 +86,8 @@
     <Compile Include="ReverseCommand.cs" />
     <Compile Include="Shapes\TShape.cs" />
     <Compile Include="Shapes\ZShape.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="TetrisForm.resx">
+      <DependentUpon>TetrisForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

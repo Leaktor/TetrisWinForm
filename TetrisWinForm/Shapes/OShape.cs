@@ -15,10 +15,7 @@ namespace TetrisWinForm
         public int[,] shape
         {
             get { return tshape; }
-            set
-            {
-                tshape = value;
-            }
+            set { tshape = value; }
         }
     }
 }

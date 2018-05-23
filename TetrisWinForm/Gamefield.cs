@@ -15,27 +15,22 @@ namespace TetrisWinForm
         int left;
         int[,] tempfield; //= new int[20, 10];
         int down=0;
-        ReverseCommand reversecommand;
-        AbstractShape dshape;
-        TShape tsh = new TShape();
-        IShape ish = new IShape();
-        JShape jsh = new JShape();
-        AbstractShape abSh = new LShape();
-        AbstractShape[] shapes = { new IShape(), new JShape(), new OShape(), new LShape(), new SShape(), new TShape(), new ZShape() };
+        AbstractShape abSh;
 
-        private void getshape()
-        {
-            Random rand = new Random();
-            abSh = shapes[rand.Next(shapes.Length)];
 
-        }
+        TetrisShape th = new TetrisShape();
+        
+
+        
+      
         
         public Gamefield(int fieldX, int fieldY)
         {
-
+            th.getAnothershape();
+            abSh = th.getShape;
             field = new int[fieldX, fieldY]; // Field(fieldX, fieldY).gamefield;
             tempfield = new int[fieldX, fieldY];// Field(fieldX, fieldY).gamefield;
-            reversecommand = new ReverseCommand();
+            
 
             SetShape(abSh);
             height = fieldX;
@@ -44,14 +39,18 @@ namespace TetrisWinForm
      
 
         }
-        
-        
+        private void getshape()
+        {
+
+            th.getAnothershape();
+            abSh = th.getShape;
+
+        }
+
         private void SetShape(AbstractShape _shape)
         {
             shape = _shape.shape;
-            dshape = _shape;
-
-
+        
         }
 
         public void Moveleft()
@@ -72,19 +71,15 @@ namespace TetrisWinForm
             }
         } 
 
-        public int[,] Reverse()
-        {
-            if (IsReverse())
-                return (reversecommand.command(dshape).shape);
-            else return null;
-        }
+
 
         public void Rev()
-        {          
+        {
+
            
-            TetrisShape th = new TetrisShape(abSh);
+            th.SetShape(abSh);
             SetShape(abSh);
-            th.getShape = Reverse();
+            th.getShape.shape = th.reverse();
         }
 
         bool IsReverse()
@@ -93,13 +88,14 @@ namespace TetrisWinForm
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if ((shape[i, j] == 1) && ((j + ((length / 2 - left)) < 0)))
+                    if ((shape[i, j] == 1) && (j + (length / 2 - left) < 0))
                     {
                         while ((shape[i, j] == 1) && ((j + ((length / 2 - left)) < 0)))
-                            left -= 1;
-                        left = length / 2;
+                        left -= 1;
+                       // left = length / 2;
                         return false;
                     }
+
                     if ((shape[i, j] == 1) && ((j + ((length / 2 - left)) > 19)))
                     {
                         while ((shape[i, j] == 1) && ((j + ((length / 2 - left)) > 19)))
@@ -113,9 +109,9 @@ namespace TetrisWinForm
 
         public   void ClearField()
         {
-            for(int i=0;i< 20; i++)
+            for(int i=0;i< height; i++)
             {
-                for (int j = 0;j < 10; j++)
+                for (int j = 0;j < length; j++)
                 {
                     field[i, j] = tempfield[i, j];
                 }
@@ -126,7 +122,7 @@ namespace TetrisWinForm
         {
 
 
-            if ((((shape[i, j] == 1)) && (((j + (length / 2 - left)) >= 0))))
+            if (((shape[i, j] == 1) && (j + (length / 2 - left) >= 0)))
                     {
                         return true;
                     }
@@ -134,13 +130,22 @@ namespace TetrisWinForm
             return false;
         }
 
+        private bool isFilledSquare(int i, int j)
+        {
+           if( shape[i, j] == 1)
+                {
+                return true;
+            }
+            return false;
+
+        }
 
 
 
         private bool DownBorder(int i, int j)
         {
 
-            if (((shape[i, j] == 1) && ((i + down) <20)))
+            if (((shape[i, j] == 1) && ((i + down) <height)))
             {
                 return true;
             }
@@ -151,7 +156,7 @@ namespace TetrisWinForm
         private bool RightBorder(int i, int j)
         {
 
-            if ((((shape[i, j] == 1)) && (((j + (length / 2 - left)) < 10))))
+            if (( (((j + (length / 2 - left)) < length))))
             {
                 return true;
             }
@@ -180,6 +185,7 @@ namespace TetrisWinForm
           
             return field;
         }
+
         public  void Set()
         {
           
@@ -187,7 +193,7 @@ namespace TetrisWinForm
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if (((shape[i, j] == 1) && (((j + (length / 2 - left)) >= 0)))&& (((shape[i, j] == 1)) && (((j + (length / 2 - left)) <= 9))))
+                    if ((isFilledSquare(i,j) && (((j + (length / 2 - left)) >= 0)))&& (((shape[i, j] == 1)) && (((j + (length / 2 - left)) <= 9))))
                     {
                         tempfield[i + down, j + (length / 2 - left)] = 1;
                        
@@ -195,7 +201,9 @@ namespace TetrisWinForm
 
                 }
                 }
+
             getshape();
+
             Rev();
             
         }
@@ -204,9 +212,9 @@ namespace TetrisWinForm
         {
             int count = 0;
 
-            for (int i = 0; i <= 19; i++)
+            for (int i = 0; i < height; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < length; j++)
                 {
                     if (field[i, j] == 1)
                     {
@@ -218,16 +226,15 @@ namespace TetrisWinForm
                     {
 
 
-                        for(int x = 0; x < 10; x++)
+                        for(int x = 0; x < length; x++)
                         {
                             tempfield[i, x] = 0;
                             for (int a = i; a > 1; a--)
                             {
-                              //  for (int b = 0; b < 10; b++)
-                           //     {
+                              
                                     tempfield[a, x] = tempfield[a-1 , x];
 
-                            //    }
+                          
                             }
 
                         }
@@ -260,13 +267,14 @@ namespace TetrisWinForm
         }
 
         private bool IsMovieLeft()
+
         {
 
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if ((shape[i, j] == 1)&&((j + ((length / 2 - left))==0)||shape[i, j] == 1 && (tempfield[i + down, j + ((length / 2 - left - 1))]) == 1))
+                    if ((shape[i, j] == 1) && ((j + ((length / 2 - left))==0)||shape[i, j] == 1 && (tempfield[i + down, j + ((length / 2 - left - 1))]) == 1))
                     {
                       
                         return false;
@@ -275,6 +283,8 @@ namespace TetrisWinForm
             }
             return true;
         }
+
+
        private bool isMovieDown()
         {
 
@@ -283,7 +293,7 @@ namespace TetrisWinForm
                 for (int j = 0; j < 4; j++)
                 {
 
-                    if (((shape[i, j] == 1) && ((i + down) == 19)) || (shape[i, j] == 1) && (tempfield[i + down + 1, j + ((length / 2 - left))] == 1))
+                    if ((isFilledSquare(i,j) &&((i + down) == 19)) || (shape[i, j] == 1) && (tempfield[i + down + 1, j + ((length / 2 - left))] == 1))
                     {
                         Set();
                         Remove();
@@ -299,6 +309,7 @@ namespace TetrisWinForm
              
             return true;
         }
+
         public void MoveRight()
         {
       

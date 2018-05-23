@@ -17,16 +17,11 @@ namespace TetrisWinForm
         }
        
        int[,] field = new int[height, length]; 
+
        public int[,] gamefield
         {
-            get
-            {
-                return field;
-            }
-            set
-            {
-                field = value;
-            }
+            get {return field;}
+            set { field = value;}
         }
     }
 }
