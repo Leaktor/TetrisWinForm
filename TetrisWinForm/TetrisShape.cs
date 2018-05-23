@@ -15,8 +15,7 @@ namespace TetrisWinForm
 
         public TetrisShape()
         {
-            Random rand = new Random();
-            _shape = shapes[rand.Next(shapes.Length)];
+            getAnothershape();
         }
 
         public int[,] reverse()

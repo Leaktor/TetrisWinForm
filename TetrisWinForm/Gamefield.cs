@@ -73,7 +73,7 @@ namespace TetrisWinForm
 
 
 
-        public void Rev()
+        public void Reverse()
         {
 
            
@@ -88,15 +88,14 @@ namespace TetrisWinForm
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if ((shape[i, j] == 1) && (j + (length / 2 - left) < 0))
+                    if (!IsLeftBorder(i,j))
                     {
                         while ((shape[i, j] == 1) && ((j + ((length / 2 - left)) < 0)))
-                        left -= 1;
-                       // left = length / 2;
+                        left -= 1;                       
                         return false;
                     }
 
-                    if ((shape[i, j] == 1) && ((j + ((length / 2 - left)) > 19)))
+                    if (!(IsRightBorder(i,j)))
                     {
                         while ((shape[i, j] == 1) && ((j + ((length / 2 - left)) > 19)))
                             left += 1;
@@ -118,11 +117,11 @@ namespace TetrisWinForm
             }
         }
 
-        private bool LeftBorder(int i,int j)
+        private bool IsLeftBorder(int i,int j)
         {
 
 
-            if (((shape[i, j] == 1) && (j + (length / 2 - left) >= 0)))
+            if ((isFilledSquare(i,j) && (j + (length / 2 - left) >= 0)))
                     {
                         return true;
                     }
@@ -153,7 +152,7 @@ namespace TetrisWinForm
             return false;
         }
 
-        private bool RightBorder(int i, int j)
+        private bool IsRightBorder(int i, int j)
         {
 
             if (( (((j + (length / 2 - left)) < length))))
@@ -173,7 +172,7 @@ namespace TetrisWinForm
             {
                 for (int j = 0; j< 4; j++)
                 {
-                       if(LeftBorder(i,j)&& RightBorder(i,j)&& DownBorder(i,j))
+                       if(IsLeftBorder(i,j)&& IsRightBorder(i,j)&& DownBorder(i,j))
                     {
 
                        field[i+down, j + (length / 2- left)] = 1;
@@ -193,7 +192,7 @@ namespace TetrisWinForm
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if ((isFilledSquare(i,j) && (((j + (length / 2 - left)) >= 0)))&& (((shape[i, j] == 1)) && (((j + (length / 2 - left)) <= 9))))
+                    if (IsLeftBorder(i, j)&& (((shape[i, j] == 1)) && (((j + (length / 2 - left)) <= 9))))
                     {
                         tempfield[i + down, j + (length / 2 - left)] = 1;
                        
@@ -204,7 +203,7 @@ namespace TetrisWinForm
 
             getshape();
 
-            Rev();
+            Reverse();
             
         }
         
@@ -303,9 +302,9 @@ namespace TetrisWinForm
 
 
                     }
-                      }
+                }
 
-                    }
+            }
              
             return true;
         }

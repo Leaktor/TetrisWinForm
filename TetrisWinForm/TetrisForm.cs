@@ -110,7 +110,7 @@ namespace TetrisWinForm
             if (e.KeyCode == Keys.W|| e.KeyCode == Keys.Up)
             {
                 refresh();          
-                gf.Rev();
+                gf.Reverse();
                 refresh();
 
             }
