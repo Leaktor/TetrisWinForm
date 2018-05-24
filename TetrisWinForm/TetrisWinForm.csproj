@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractShape.cs" />
+    <Compile Include="Cell.cs" />
     <Compile Include="Gamefield.cs" />
     <Compile Include="Shapes\JShape.cs" />
     <Compile Include="LeftCommand.cs" />

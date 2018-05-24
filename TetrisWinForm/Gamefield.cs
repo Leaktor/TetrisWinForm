@@ -21,8 +21,7 @@ namespace TetrisWinForm
         TetrisShape th = new TetrisShape();
         
 
-        
-      
+       
         
         public Gamefield(int fieldX, int fieldY)
         {

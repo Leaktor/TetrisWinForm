@@ -16,39 +16,33 @@ namespace TetrisWinForm
         public TetrisForm()
         {
             InitializeComponent();
+            
+
+            
 
         }
-
+        
         Gamefield gf = new Gamefield(20, 10);
+        
+        
     
-        private Point[] DrawShape(int startpointx,int startpointy)
-        {
-            int cellsize = 25;
-            int filledcellsize = 20;
-            Point p1 = new Point(startpointy * cellsize, startpointx * cellsize);
-            Point p2 = new Point(startpointy * cellsize + filledcellsize, startpointx * cellsize);
-            Point p3 = new Point(startpointy * cellsize, startpointx * cellsize + filledcellsize);
-            Point p4 = new Point(startpointy * cellsize + filledcellsize, startpointx * cellsize + filledcellsize);
-            return new Point[] { p1, p3, p4, p2 };
-        }
-
-
+        
+        //Cell cell = new Cell();
         public void refresh()
         {
 
             int[,] myfield = gf.StartPos();
 
+            Graphics formGraphics = CreateGraphics();
+            Cell filledcell = new Cell(Color.Red, formGraphics);
+            Cell cell = new Cell(Color.Cyan, formGraphics);
 
 
-            Graphics formGraphics = CreateGraphics();         
-            SolidBrush cellcolor = new SolidBrush(Color.Cyan);
-            SolidBrush filledcell = new SolidBrush(Color.Red);
-          
 
 
-            
-         
-          
+
+
+
             for (int x = 0; x < 20; x++)
             {
                 for (int y = 0; y < 10; y++)
@@ -56,9 +50,11 @@ namespace TetrisWinForm
       
 
                     if (myfield[x, y] == 1)
-                    {                       
-                                             
-                        formGraphics.FillPolygon(filledcell, DrawShape(x,y));
+                    {
+
+                        //  formGraphics.FillPolygon(filledcell, DrawShape(x,y));
+
+                        filledcell.getCell(x, y);
                     }
 
 
@@ -66,9 +62,9 @@ namespace TetrisWinForm
                     {
 
 
-                        
-                        /// formGraphics.FillEllipse(brush1, new Rectangle(cellsize * y, cellsize * x, filledcellsize, filledcellsize));
-                        formGraphics.FillPolygon(cellcolor, DrawShape(x, y));
+
+                        cell.getCell(x, y);
+                     //   formGraphics.FillPolygon(cellcolor, DrawShape(x, y));
 
                     }
 
