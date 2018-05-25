@@ -60,9 +60,7 @@ namespace TetrisWinForm
 
                     if (myfield[x, y] == 0)
                     {
-
-
-
+                        
                         cell.getCell(x, y);
                      //   formGraphics.FillPolygon(cellcolor, DrawShape(x, y));
 

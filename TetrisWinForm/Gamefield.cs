@@ -64,7 +64,7 @@ namespace TetrisWinForm
         public void Movedown()
         {
            
-            if (isMovieDown())
+            if (isMovieDown()&&IsReverse())
             {
                 down += 1;
             }
@@ -75,10 +75,12 @@ namespace TetrisWinForm
         public void Reverse()
         {
 
-           
-            th.SetShape(abSh);
-            SetShape(abSh);
-            th.getShape.shape = th.reverse();
+            if (IsReverse())
+            {
+                th.SetShape(abSh);
+                SetShape(abSh);
+                th.getShape.shape = th.reverse();
+            }
         }
 
         bool IsReverse()
@@ -87,20 +89,25 @@ namespace TetrisWinForm
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if (!IsLeftBorder(i,j))
+
+                    if ((shape[i, j] == 1) && ((j + ((length / 2 - left)) > 9)))
+                    {
+                        while ((shape[i, j] == 1) && ((j + ((length / 2 - left)) > 9)))
+                            left += 1;
+                        return false;
+                    }
+
+                    if ((shape[i, j] == 1) && ((j + ((length / 2 - left)) <0)))
                     {
                         while ((shape[i, j] == 1) && ((j + ((length / 2 - left)) < 0)))
                         left -= 1;                       
                         return false;
                     }
 
-                    if (!(IsRightBorder(i,j)))
-                    {
-                        while ((shape[i, j] == 1) && ((j + ((length / 2 - left)) > 19)))
-                            left += 1;
-                        return true;
-                    }
+                
+                   
                 }
+               
             }
             return true;
          }
@@ -111,7 +118,10 @@ namespace TetrisWinForm
             {
                 for (int j = 0;j < length; j++)
                 {
-                    field[i, j] = tempfield[i, j];
+                    if (IsReverse())
+                    {
+                        field[i, j] = tempfield[i, j];
+                    }
                 }
             }
         }
@@ -191,7 +201,7 @@ namespace TetrisWinForm
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if (IsLeftBorder(i, j)&& (((shape[i, j] == 1)) && (((j + (length / 2 - left)) <= 9))))
+                    if (IsLeftBorder(i, j)&& (((shape[i, j] == 1)) && (((j + (length / 2 - left)) <= 9)&&IsReverse())))
                     {
                         tempfield[i + down, j + (length / 2 - left)] = 1;
                        
@@ -291,10 +301,13 @@ namespace TetrisWinForm
                 for (int j = 0; j < 4; j++)
                 {
 
-                    if ((isFilledSquare(i,j) &&((i + down) == 19)) || (shape[i, j] == 1) && (tempfield[i + down + 1, j + ((length / 2 - left))] == 1))
+                    if ((isFilledSquare(i,j) &&((i + down) == 19)) || (shape[i, j] == 1) && (tempfield[i + down + 1, j + ((length / 2 - left))] == 1 && IsReverse()))
                     {
-                        Set();
-                        Remove();
+                        if (IsReverse())
+                        {
+                            Set();
+                            Remove();
+                        }
                         left = 0;
                         down = 0;
                         return false;
