@@ -104,8 +104,15 @@ namespace TetrisWinForm
                         return false;
                     }
 
-                
-                   
+                 if   (isFilledSquare(i, j) && ((i + down) > 19))
+                    {
+                        while ((isFilledSquare(i, j) && ((i + down) >19)))
+                            down -= 1;
+                        return false;
+                    }
+
+
+
                 }
                
             }
